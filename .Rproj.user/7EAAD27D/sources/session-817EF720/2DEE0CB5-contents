@@ -19,7 +19,7 @@ library(readxl)
 # Bring data set
 ```{r}
 df <- read_xlsx("../Data/All_Yields_SR_Soybean.xlsx") %>%
-  mutate(SR_ksha = round(SR_ksha,0)
+  mutate(SR_ksha = round(SR_ksha,1),
          SR_ksha = as.factor(SR_ksha))
 ```
 
