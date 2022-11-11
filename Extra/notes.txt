@@ -1,0 +1,28 @@
+2019 todos los plots con 300 ft
+leer papers
+idear estructura del informe
+combine abarco todos los años 10 rows
+2022 solo se sembro con ExaE (16 rows). El resto de los anos tambien se sembro con MaxE (12 rows)
+25 ft de cosecha es equivalente a 10 surcos  
+convertir acres a has
+cambiar el sitema de comas en los yields 
+
+Doubts
+- 2020 como fue el diseno de los plots? No tienen sentido en el borrador los ft de largo. 
+- Las medidas con lapicera en cada mapa, donde la mayoria son x 25 ft, corresponden a la pasada de la cosechadora, no?
+(from 104 to 301: 503 ft and from 108 to 305: 587 ft)
+- Por ej en mapa 2021 los rows de los plots son los teoricos inciciales, pero al final los rows reales fueorn segun la
+sembradora?
+- 2022 IRRI (ver mapa) son 297 ft todos los plots de terminacion 04,05,06 y de 294 ft los terminados en 01 02 03 ?
+- Medidas de los plots del DRY 2022
+- Densidades de siembra, hago columna con los valores anotados en los plots ?
+- Distancia entre surcos? ME=30 ft EE=40 ft ? De ser asi si cada una siembra en 12 y 16 surcos, seria una
+DES de 2,5 ft para ambas (76,2 cm).
+- El weight que esta en libras es en que superficie? O es rendimiento en la superficie total del plot.
+- Si se siembra una pasada segun el ancho de labor de la maquina (30 o 40 ft, depende la sembradora), y se cosechan 10 rows 
+(teoricamente equivalente a 25 ft ya que la distancia entre surcos es de 2,5 ft), al momento de cosecha se estiman con esos 
+10 rows cosechados cuanto es el rinde del plot completo en los 12 o 16 rows?
+- Los plots del año 2022 quedan con los numeros del 100 a 400 en DRY e IRRI o del 100 al 800 ? En mapa esta de una manera y 
+en tabla de otra.  
+
+
