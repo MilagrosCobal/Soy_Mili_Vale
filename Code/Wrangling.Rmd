@@ -45,18 +45,34 @@ df <- df_raw %>%
 #$ to get access inside the df, and specifying wich column.
 ```
 
+```{r}
+# here change plot numbers to 100 to 300, except for 2022 where should go from 100 to 400. Also reps should go from 1 to 3 (1 to 4 in 2022)
+```
+
 
 ```{r}
 df_w <- df %>%
   mutate(Yield_bu = round(Yield_lb/60,4),
          Yield_kg = round(Yield_lb*0.453592,4),
-         Yield_bu_ac = 43560*Yield_bu/(Longitude_ft*25),
-         Yield_kg_ha = 10000*Yield_kg/((Longitude_ft*25)*0.092903))
+         # Estimated moisture content in the missing cell as the mean
+         Moisture_perc = case_when(is.na(Moisture_perc) ~ ((10.6+7.97)/2),
+                                   T~Moisture_perc),
+         # calculated water content remaining to get 13% moisture
+         water_content = (0.13*(Yield_kg*(Moisture_perc/100))/(Moisture_perc/100)),
+         FYield_kg = water_content + Yield_kg,
+         #Yield_bu_ac = 43560*Yield_bu/(Longitude_ft*25),
+         Yield_kg_ha = 10000*FYield_kg/((Longitude_ft*25)*0.092903))
 
-write.csv(df_w, "../Data/Full_df_w.csv") #wrote a csv and kept it.
+
+write.csv(df_w, "../Data/full_df_w.csv")
 ```
 ```{r}
-#check rep numbers, they have to go from 1 to 3. 
+df_ready <- df_w %>%
+  dplyr::select(Study:SR_ksha, Yield_kg_ha)
+```
+
+
+```{r}
 #change year 2021 vs 2022 because they are inverted. must be successive 
 #check all yields, those have to be real
 #check data SR_ksha year 2022. All facts from that column are OK in All_data_backup but the facts are changed in Full_df_w.csv (that is the file that has to be OK)
