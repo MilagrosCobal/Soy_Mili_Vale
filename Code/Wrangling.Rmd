@@ -18,13 +18,54 @@ library(readxl)
 
 # Bring data set
 ```{r}
-df <- read_xlsx("../Data/All_Yields_SR_Soybean.xlsx") %>%
-  mutate(SR_ksha = round(SR_ksha,1),
-         SR_ksha = as.factor(SR_ksha))
+df_raw <- read_xlsx("../Data/All_Yields_SR_Soybean.xlsx")
+
+df <- df_raw %>%
+  mutate(SR_ksha = round(SR_ksha, 0), # round number to 0 
+         SR_ksha = case_when(SR_ksha == 210 ~ 215, # overwrite columns that I want to modify, if I overwrite it, it never create a new column. In this case, it means "in case it SR_ksha is 210, convert it to 215" 
+                             SR_ksha == 259 ~ 270,
+                             SR_ksha == 269 ~ 270,
+                             T ~ SR_ksha),
+         SR_ksha = as.factor(SR_ksha), # column SR_ksha convert it as factor, I can do the same with character, double, numeric.
+         Study = as.factor(Study),
+         Rep = as.factor(Rep),
+         Planter = as.factor(Planter)) %>%
+  rename(Yield_lb = `Yield (lb)`, # `` so that R interprets it as a string (due to the " "). I mean, in case you have an space in an original column, you have to write '' around the column name. Ex: Yield (lb) > put 'Yield (lb)' cause have a space
+         Moisture_perc = `Mosture (%)`, #means that if says Mosture (%) repleace for Moisture_perc
+         Longitude_ft = `Distance (ft) * 25 ft`) %>%
+  mutate(Moisture_perc = case_when(Moisture_perc == "not measured" ~ NA_character_,
+                                    T ~ Moisture_perc), #means that in case says "not measured" repleace it for NA, but if don't say "not measured" just leave the original fact. I order to leave the original fact with > T ~ Moisture_perc.
+         Moisture_perc = str_remove(Moisture_perc, "%"),
+         Moisture_perc = str_replace(Moisture_perc, ",", "."),
+         Moisture_perc = as.double(Moisture_perc), 
+         Longitude_ft = str_replace(Longitude_ft, ",", "."), #at column Longitude_ft replace a , for .
+         Longitude_ft = as.double(Longitude_ft))
+
+#levels(df$Planter), to check the levels of each factor variable. 
+#$ to get access inside the df, and specifying wich column.
 ```
 
+
 ```{r}
-df
-levels(df$SR_ksha)
+df_w <- df %>%
+  mutate(Yield_bu = round(Yield_lb/60,4),
+         Yield_kg = round(Yield_lb*0.453592,4),
+         Yield_bu_ac = 43560*Yield_bu/(Longitude_ft*25),
+         Yield_kg_ha = 10000*Yield_kg/((Longitude_ft*25)*0.092903))
+
+write.csv(df_w, "../Data/Full_df_w.csv") #wrote a csv and kept it.
 ```
+```{r}
+#check rep numbers, they have to go from 1 to 3. 
+#change year 2021 vs 2022 because they are inverted. must be successive 
+#check all yields, those have to be real
+#check data SR_ksha year 2022. All facts from that column are OK in All_data_backup but the facts are changed in Full_df_w.csv (that is the file that has to be OK)
+#just in case, check again Yield_lb (aparently it's OK in Full_df_w.csv). compare with pictures. 
+#check notes
+
+#All_Yields_SR_Soybean.xslx 
+#High yields year 2020 and 2021 Irrigated 
+
+```
+
 
